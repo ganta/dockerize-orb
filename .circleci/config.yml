@@ -1,0 +1,54 @@
+version: 2.1
+
+orbs:
+  orb-tools: circleci/orb-tools@volatile
+  cli: circleci/circleci-cli@volatile
+
+workflows:
+  version: 2.1
+  test-and-publish-to-development:
+    jobs:
+      - orb-tools/pack:
+          source-dir: src/
+          destination-orb-path: packed/orb.yml
+          workspace-path: packed/orb.yml
+          artifact-path: packed/orb.yml
+          validate: true
+      - orb-tools/test-in-builds:
+          requires: [orb-tools/pack]
+          attach-workspace: true
+          orb-location: packed/orb.yml
+          orb-name: dockerize
+          test-steps:
+            - orb-tools/local-test-build:
+                test-config-location: test/wait.yml
+      - orb-tools/publish:
+          requires: [orb-tools/test-in-builds]
+          orb-path: packed/orb.yml
+          orb-ref: "ganta/dockerize@dev:${CIRCLE_BRANCH}"
+          publish-token-variable: "${ORB_PUBLISHING_TOKEN}"
+          validate: true
+          checkout: false
+          attach-workspace: true
+
+  publish-to-production:
+    jobs:
+      - orb-tools/pack:
+          filters:
+            tags:
+              only: /\d+\.\d+\.\d+/
+            branches:
+              ignore: /.*/
+          source-dir: src/
+          destination-orb-path: packed/orb.yml
+          workspace-path: packed/orb.yml
+          artifact-path: packed/orb.yml
+          validate: true
+      - orb-tools/publish:
+          requires: [orb-tools/pack]
+          orb-path: packed/orb.yml
+          orb-ref: "ganta/dockerize@${CIRCLE_TAG}"
+          publish-token-variable: "${ORB_PUBLISHING_TOKEN}"
+          validate: true
+          checkout: false
+          attach-workspace: true
