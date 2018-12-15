@@ -5,7 +5,7 @@ orbs:
   cli: circleci/circleci-cli@volatile
 
 workflows:
-  version: 2.1
+  version: 2
   test-and-publish-to-development:
     jobs:
       - orb-tools/pack:
