@@ -1,0 +1,5 @@
+version: 2.1
+
+description: |
+  Wait for middleware service to be available using dockerize on CircleCI
+  https://circleci.com/orbs/registry/orb/ganta/dockerize
