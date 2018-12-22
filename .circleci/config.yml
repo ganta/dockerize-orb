@@ -34,7 +34,7 @@ workflows:
   publish-to-production:
     jobs:
       - orb-tools/pack:
-          filters:
+          filters: &publish_to_production_filters
             tags:
               only: /\d+\.\d+\.\d+/
             branches:
@@ -45,6 +45,10 @@ workflows:
           artifact-path: packed/orb.yml
           validate: true
       - orb-tools/publish:
+          filters:
+            # The same filter as the upstream job is required.
+            # Without this, the job does not appear in the workflow.
+            <<: *publish_to_production_filters
           requires: [orb-tools/pack]
           orb-path: packed/orb.yml
           orb-ref: "ganta/dockerize@${CIRCLE_TAG}"
