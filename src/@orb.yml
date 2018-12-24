@@ -1,5 +1,8 @@
 version: 2.1
 
-description: |
+description: >-
   Wait for middleware service to be available using dockerize on CircleCI
   https://circleci.com/orbs/registry/orb/ganta/dockerize
+  This Orb requires dockerize.
+  dockerize has been installed as a standard on the Pre-Build CircleCI Docker images.
+  If you use your own image, you need to install dockerize.
