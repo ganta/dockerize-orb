@@ -9,31 +9,6 @@ parameters:
     default: 10s
 steps:
   - run:
-      name: Check if Dockerize is installed
-      command: |
-        mkdir ~/bin
-
-        if type dockerize
-        then
-          ln -s $(type -p dockerize) ~/bin/dockerize
-          exit 0
-        fi
-
-        dockerize_version="v0.6.1"
-        dockerize_archive_name="dockerize-linux-amd64-${dockerize_version}.tar.gz"
-        dockerize_download_uri="https://github.com/jwilder/dockerize/releases/download/${dockerize_version}/${dockerize_archive_name}"
-
-        echo ${dockerize_download_uri}
-
-        if type wget
-        then
-          wget -P /var/tmp ${dockerize_download_uri}
-        else
-          curl --fail --output /var/tmp/${dockerize_archive_name} ${dockerize_download_uri}
-        fi
-
-        tar -C ~/bin -xzvf /var/tmp/${dockerize_archive_name}
-  - run:
       name: Wait << prameters.uri >>
       command: |
-        ~/bin/dockerize -wait "<< parameters.uri >>" -timeout "<< parameters.timeout >>"
+        dockerize -wait "<< parameters.uri >>" -timeout "<< parameters.timeout >>"
