@@ -22,6 +22,8 @@ workflows:
           test-steps:
             - orb-tools/local-test-build:
                 test-config-location: test/wait.yml
+            - orb-tools/local-test-build:
+                test-config-location: test/wait-tcp.yml
       - orb-tools/publish:
           requires: [orb-tools/test-in-builds]
           orb-path: packed/orb.yml
