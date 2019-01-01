@@ -1,0 +1,23 @@
+description: Wait for the services to be available using HTTP.
+parameters:
+  host:
+    description: Specifies the host name of the service.
+    type: string
+    default: localhost
+  port:
+    description: Specifies the TCP port on which the service is listening for connections.
+    type: integer
+    default: 80
+  path:
+    description: Specify the path to be checked.
+    type: string
+    default: /
+  timeout:
+    description: How long to wait for the services to become available.
+    type: string
+    default: 10s
+steps:
+  - run:
+      name: Wait for HTTP connection (<< parameters.host >>:<< parameters.port >><< parameters.path >>)
+      command: |
+        dockerize -wait "http://<< parameters.host >>:<< parameters.port >><< parameters.path >>" -timeout "<< parameters.timeout >>"
