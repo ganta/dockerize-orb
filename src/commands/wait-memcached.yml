@@ -1,0 +1,19 @@
+description: Wait for the Memcached to be available.
+parameters:
+  host:
+    description: Specifies the host name of the Memcached.
+    type: string
+    default: localhost
+  port:
+    description: Specifies the TCP port on which the Memcached is listening for connections.
+    type: integer
+    default: 11211
+  timeout:
+    description: How long to wait for the Memcached to become available.
+    type: string
+    default: 30s
+steps:
+  - run:
+      name: Wait for the Memcached to start up (<< parameters.host >>:<< parameters.port >>)
+      command: |
+        dockerize -wait "tcp://<< parameters.host >>:<< parameters.port >>" -timeout "<< parameters.timeout >>"
