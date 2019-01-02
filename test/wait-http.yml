@@ -1,0 +1,9 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/circleci-cli:latest
+      - image: nginx:1.15.8-alpine
+    steps:
+      - dockerize/wait-http

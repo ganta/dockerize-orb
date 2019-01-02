@@ -1,0 +1,17 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/circleci-cli:latest
+      - image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.5.4
+        environment:
+          - cluster.name=orb-test
+          - discovery.type=single-node
+          - bootstrap.memory_lock=true
+          - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    steps:
+      - dockerize/wait-http:
+          port: 9200
+          path: /_nodes/stats
+          timeout: 30s
