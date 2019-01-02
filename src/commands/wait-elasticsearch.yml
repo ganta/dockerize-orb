@@ -1,0 +1,19 @@
+description: Wait for the Elasticsearch to be available.
+parameters:
+  host:
+    description: Specifies the host name of the Elasticsearch.
+    type: string
+    default: localhost
+  port:
+    description: Specifies the TCP port on which the Elasticsearch is listening for connections.
+    type: integer
+    default: 9200
+  timeout:
+    description: How long to wait for the Elasticsearch to become available.
+    type: string
+    default: 30s
+steps:
+  - run:
+      name: Wait for the Elasticsearch to start up (<< parameters.host >>:<< parameters.port >>)
+      command: |
+        dockerize -wait "http://<< parameters.host >>:<< parameters.port >>/_nodes/stats" -timeout "<< parameters.timeout >>"

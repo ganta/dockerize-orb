@@ -1,0 +1,9 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/circleci-cli:latest
+      - image: memcached:1.5.12-alpine
+    steps:
+      - dockerize/wait-memcached

@@ -28,6 +28,14 @@ workflows:
                 test-config-location: test/wait-http.yml
             - orb-tools/local-test-build:
                 test-config-location: test/wait-http-with-path.yml
+            - orb-tools/local-test-build:
+                test-config-location: test/wait-mysql.yml
+            - orb-tools/local-test-build:
+                test-config-location: test/wait-redis.yml
+            - orb-tools/local-test-build:
+                test-config-location: test/wait-memcached.yml
+            - orb-tools/local-test-build:
+                test-config-location: test/wait-elasticsearch.yml
       - orb-tools/publish:
           requires: [orb-tools/test-in-builds]
           orb-path: packed/orb.yml
