@@ -14,4 +14,3 @@ jobs:
       - dockerize/wait-http:
           port: 9200
           path: /_nodes/stats
-          timeout: 30s

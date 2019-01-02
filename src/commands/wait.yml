@@ -6,7 +6,7 @@ parameters:
   timeout:
     description: How long to wait for the services to become available.
     type: string
-    default: 10s
+    default: 30s
 steps:
   - run:
       name: Wait << prameters.uri >>
