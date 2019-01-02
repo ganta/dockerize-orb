@@ -1,0 +1,19 @@
+description: Wait for the MySQL to be available.
+parameters:
+  host:
+    description: Specifies the host name of the MySQL.
+    type: string
+    default: localhost
+  port:
+    description: Specifies the TCP port on which the MySQL is listening for connections.
+    type: integer
+    default: 3306
+  timeout:
+    description: How long to wait for the MySQL to become available.
+    type: string
+    default: 30s
+steps:
+  - run:
+      name: Wait for the MySQL to start up (<< parameters.host >>:<< parameters.port >>)
+      command: |
+        dockerize -wait "tcp://<< parameters.host >>:<< parameters.port >>" -timeout "<< parameters.timeout >>"
