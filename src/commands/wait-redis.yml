@@ -1,0 +1,19 @@
+description: Wait for the Redis to be available.
+parameters:
+  host:
+    description: Specifies the host name of the Redis.
+    type: string
+    default: localhost
+  port:
+    description: Specifies the TCP port on which the Redis is listening for connections.
+    type: integer
+    default: 6379
+  timeout:
+    description: How long to wait for the Redis to become available.
+    type: string
+    default: 30s
+steps:
+  - run:
+      name: Wait for the Redis to start up (<< parameters.host >>:<< parameters.port >>)
+      command: |
+        dockerize -wait "tcp://<< parameters.host >>:<< parameters.port >>" -timeout "<< parameters.timeout >>"
