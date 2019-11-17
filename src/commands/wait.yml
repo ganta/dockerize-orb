@@ -9,6 +9,6 @@ parameters:
     default: 30s
 steps:
   - run:
-      name: Wait << prameters.uri >>
+      name: Wait << parameters.uri >>
       command: |
         dockerize -wait "<< parameters.uri >>" -timeout "<< parameters.timeout >>"
